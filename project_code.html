@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Secure Fingerprint Voting System</title>
+
+<style>
+
+body{
+font-family: Arial;
+text-align:center;
+color:white;
+margin:0;
+background: linear-gradient(-45deg,#1e3c72,#2a5298,#ff512f,#dd2476);
+background-size:400% 400%;
+animation:bgmove 12s infinite;
+}
+
+@keyframes bgmove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+h1{
+padding:15px;
+}
+
+.menu{
+background:rgba(0,0,0,0.6);
+padding:10px;
+}
+
+.menu button{
+background:#00c6ff;
+border:none;
+padding:10px 15px;
+margin:5px;
+font-size:15px;
+border-radius:5px;
+cursor:pointer;
+}
+
+.menu button:hover{
+background:#0072ff;
+}
+
+.section{
+display:none;
+background:rgba(0,0,0,0.6);
+margin:20px;
+padding:20px;
+border-radius:10px;
+}
+
+button{
+padding:10px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+input{
+padding:8px;
+margin:5px;
+border-radius:5px;
+border:none;
+}
+
+.candidateCard{
+background:white;
+color:black;
+padding:15px;
+border-radius:10px;
+width:200px;
+box-shadow:0 5px 10px rgba(0,0,0,0.3);
+text-align:center;
+}
+
+.avatar{
+width:80px;
+height:80px;
+background:#007bff;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:35px;
+color:white;
+margin:auto;
+margin-bottom:10px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Secure Fingerprint Voting System</h1>
+
+<div class="menu">
+
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('candidates')">Candidates</button>
+<button onclick="showPage('admin')">Admin</button>
+<button onclick="showPage('result')">Result</button>
+
+</div>
+
+
+<!-- HOME -->
+
+<div id="home" class="section" style="display:block">
+
+<h2>Welcome</h2>
+
+<p>This website demonstrates a Secure Fingerprint Voting System.</p>
+
+<p>The voting process is performed through a fingerprint voting machine.</p>
+
+</div>
+
+
+<!-- CANDIDATES -->
+
+<div id="candidates" class="section">
+
+<h2>Election Candidates</h2>
+
+<div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;">
+
+<div class="candidateCard">
+<div class="avatar">A</div>
+<h3>CANDIDATE A</h3>
+<p>Party:AAA</p>
+<p>Age: 45</p>
+<p>Experience: 10 Years in Public Service</p>
+</div>
+
+<div class="candidateCard">
+<div class="avatar">B</div>
+<h3>CANDIDATE B</h3>
+<p>Party:BBB</p>
+<p>Age: 40</p>
+<p>Experience: Social Activist</p>
+</div>
+
+<div class="candidateCard">
+<div class="avatar">C</div>
+<h3>Candidate C</h3>
+<p>Party:CCC</p>
+<p>Age: 50</p>
+<p>Experience: Former Minister</p>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ADMIN -->
+
+<div id="admin" class="section">
+
+<h2>Admin Login</h2>
+
+<input type="password" id="adminpass" placeholder="Enter Password">
+
+<button onclick="adminLogin()">Login</button>
+
+<p id="adminmsg"></p>
+
+<br><br>
+
+<h3>Update Election Winner</h3>
+
+<input type="text" id="winnerName" placeholder="Enter Winner Candidate Name">
+
+<button onclick="setWinner()">Update Winner</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div id="result" class="section">
+
+<h2>Election Result</h2>
+
+<p id="resultmsg">Result will be announced by admin</p>
+
+</div>
+
+
+
+<script>
+
+function showPage(page){
+
+let sections=document.querySelectorAll(".section");
+
+sections.forEach(sec=>sec.style.display="none");
+
+document.getElementById(page).style.display="block";
+
+}
+
+
+
+let adminAccess=false;
+let winnerCandidate="";
+
+function adminLogin(){
+
+let pass=document.getElementById("adminpass").value;
+
+if(pass=="admin123"){
+
+adminAccess=true;
+document.getElementById("adminmsg").innerHTML="Admin Access Granted";
+
+}
+else{
+
+document.getElementById("adminmsg").innerHTML="Wrong Password";
+
+}
+
+}
+
+
+
+function setWinner(){
+
+if(!adminAccess){
+
+alert("Admin login required");
+return;
+
+}
+
+winnerCandidate=document.getElementById("winnerName").value;
+
+alert("Winner Updated Successfully");
+
+}
+
+
+
+function showResult(){
+
+if(!adminAccess){
+
+document.getElementById("resultmsg").innerHTML="Result will be announce later please wait";
+return;
+
+}
+
+if(winnerCandidate==""){
+
+document.getElementById("resultmsg").innerHTML="Winner not announced yet";
+
+}
+else{
+
+document.getElementById("resultmsg").innerHTML="Winner Candidate : "+winnerCandidate;
+
+}
+
+}
+
+setInterval(showResult,1000);
+
+</script>
+
+</body>
+</html>
